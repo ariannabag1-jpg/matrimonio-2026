@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Federico & Francesca · 27 Settembre 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -346,109 +346,7 @@ section { padding: 6rem 2rem; }
 }
 .info-card-text strong { color: var(--text); font-weight: 500; }
 
-/* ── RSVP ── */
-#rsvp { background: var(--sage-pale); }
 
-.rsvp-form {
-  max-width: 560px;
-  margin: 0 auto;
-  background: var(--white);
-  padding: 3rem;
-  border: 1px solid var(--cream-dark);
-}
-
-.form-row { margin-bottom: 1.5rem; }
-.form-row label {
-  display: block;
-  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--text-mid); margin-bottom: 0.5rem;
-}
-.form-row input:not([type=radio]):not([type=checkbox]),
-.form-row select,
-.form-row textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--cream-dark);
-  background: var(--cream);
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  color: var(--text);
-  outline: none;
-  transition: border-color 0.3s;
-  -webkit-appearance: none;
-}
-.form-row input:not([type=radio]):not([type=checkbox]):focus,
-.form-row select:focus,
-.form-row textarea:focus {
-  border-color: var(--sage);
-}
-.form-row textarea { resize: vertical; min-height: 80px; }
-
-.radio-group { display: flex; gap: 1rem; flex-wrap: wrap; }
-.radio-option {
-  display: flex; align-items: center; gap: 0.5rem;
-  cursor: pointer; font-size: 0.85rem; color: var(--text-mid);
-}
-.radio-option input[type=radio] { accent-color: var(--sage); width: 16px; height: 16px; }
-
-.btn-primary {
-  width: 100%;
-  padding: 1rem;
-  background: var(--sage);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.btn-primary:hover { background: var(--sage-dark); }
-
-.rsvp-success {
-  display: none;
-  text-align: center;
-  padding: 2rem;
-}
-.rsvp-success .script {
-  font-family: var(--font-script);
-  font-size: 3rem;
-  color: var(--sage);
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-/* ── BAMBINI ── */
-#bambini {
-  background: var(--cream);
-  padding: 3rem 2rem;
-}
-.bambini-box {
-  max-width: 640px;
-  margin: 0 auto;
-  background: var(--white);
-  border: 1px solid var(--cream-dark);
-  padding: 2.5rem 3rem;
-  text-align: center;
-  position: relative;
-}
-.bambini-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
-.bambini-title {
-  font-family: var(--font-display);
-  font-size: 1.6rem; font-weight: 400; font-style: italic;
-  color: var(--text); margin-bottom: 1rem;
-}
-.bambini-text {
-  font-size: 0.85rem; color: var(--text-mid);
-  line-height: 1.8;
-}
-.bambini-email {
-  display: inline-block; margin-top: 1rem;
-  font-size: 0.8rem; color: var(--sage-dark);
-  border-bottom: 1px dashed var(--sage-light);
-  text-decoration: none;
-}
 
 /* ── LISTA NOZZE ── */
 #lista-nozze { background: var(--white); }
@@ -817,7 +715,6 @@ footer {
   .arrivare-grid { grid-template-columns: 1fr; }
   .tl-item { grid-template-columns: 1fr 40px 1fr; }
   .messages-wall { grid-template-columns: 1fr; }
-  .rsvp-form { padding: 2rem 1.5rem; }
   .timeline::before { left: 20px; }
   .tl-item { grid-template-columns: 40px 1fr; }
   .tl-left { display: none; }
@@ -833,7 +730,6 @@ footer {
     <li><a href="#programma">Programma</a></li>
     <li><a href="#luoghi">I Luoghi</a></li>
     <li><a href="#arrivare">Come Arrivare</a></li>
-    <li><a href="#rsvp">RSVP</a></li>
     <li><a href="#lista-nozze">Lista Nozze</a></li>
     <li><a href="#day-after">Il Giorno Dopo</a></li>
     <li><a href="#guestbook">Guestbook</a></li>
@@ -1035,80 +931,6 @@ footer {
   </div>
 </section>
 
-<!-- RSVP -->
-<section id="rsvp">
-  <div class="section-inner">
-    <div class="section-label">Conferma Presenza</div>
-    <h2 class="section-title">RSVP</h2>
-    <div class="section-divider"></div>
-    <p style="text-align:center; color:var(--text-mid); font-size:0.85rem; margin-bottom:2rem; font-family:var(--font-display); font-style:italic;">
-      Vi chiediamo di confermare la vostra presenza entro il <strong>20 Agosto 2026</strong>
-    </p>
-    <div class="rsvp-form" id="rsvp-form-wrap">
-      <div class="form-row">
-        <label>Nome e Cognome *</label>
-        <input type="text" id="rsvp-nome" placeholder="Il tuo nome completo">
-      </div>
-      <div class="form-row">
-        <label>Partecipo alla cerimonia e al ricevimento *</label>
-        <div class="radio-group">
-          <label class="radio-option"><input type="radio" name="presenza" value="si"> Sì, ci sarò con gioia!</label>
-          <label class="radio-option"><input type="radio" name="presenza" value="no"> Purtroppo non posso</label>
-        </div>
-      </div>
-      <div class="form-row" id="row-ospiti">
-        <label>Numero totale ospiti (incluso te)</label>
-        <select id="rsvp-ospiti">
-          <option value="1">Solo io</option>
-          <option value="2">In 2</option>
-          <option value="3">In 3</option>
-          <option value="4">In 4</option>
-          <option value="5+">5 o più</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>Preferenza menu</label>
-        <div class="radio-group">
-          <label class="radio-option"><input type="radio" name="menu" value="standard"> Menu classico</label>
-          <label class="radio-option"><input type="radio" name="menu" value="vegetariano"> Vegetariano</label>
-          <label class="radio-option"><input type="radio" name="menu" value="vegano"> Vegano</label>
-        </div>
-      </div>
-      <div class="form-row">
-        <label>Allergie o intolleranze alimentari</label>
-        <input type="text" id="rsvp-allergie" placeholder="Scrivi qui se hai allergie...">
-      </div>
-      <div class="form-row">
-        <label>Note o messaggi per gli sposi</label>
-        <textarea id="rsvp-note" placeholder="Hai bisogno di un passaggio per Sutri? Vuoi dirci qualcosa?"></textarea>
-      </div>
-      <button class="btn-primary" onclick="submitRSVP()">Invia Conferma</button>
-      <div class="rsvp-success" id="rsvp-success">
-        <span class="script">Grazie!</span>
-        <p style="font-family:var(--font-display); font-style:italic; color:var(--text-mid); font-size:1rem;">
-          Abbiamo ricevuto la tua conferma. Non vediamo l'ora di festeggiare con te!
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BAMBINI -->
-<section id="bambini" style="padding-top: 0; padding-bottom: 3rem;">
-  <div class="bambini-box">
-    
-    <div class="bambini-title">Una serata tra adulti</div>
-    <p class="bambini-text">
-      Abbiamo scelto di organizzare questo giorno speciale come una festa riservata agli adulti,<br>
-      per condividere con voi la gioia in un'atmosfera raccolta e conviviale.<br><br>
-      <em>Sappiamo che per alcune famiglie questo può richiedere un piccolo sforzo organizzativo<br>
-      — e vi ringraziamo di cuore per la comprensione e per tutto l'amore che ci date.</em><br><br>
-      Se avete esigenze particolari legate ai bambini, o se avete dubbi su come organizzarvi,<br>
-      scriveteci prima dell'RSVP oppure direttamente a:
-    </p>
-    <a href="mailto:federicomontozzi@icloud.com" class="bambini-email">federicomontozzi@icloud.com</a>
-  </div>
-</section>
 
 <!-- LISTA NOZZE -->
 <section id="lista-nozze">
@@ -1308,12 +1130,12 @@ setInterval(updateCountdown, 1000);
 // ── GIFTS ──
 const IBAN = 'IT96N0301503200000004892449';
 const gifts = [
-  { id: 'valige', name: 'Set di Valigie Samsonite', price: 1876, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.samsonite.it/dw/image/v2/BDKK_PRD/on/demandware.static/-/Sites-samsonite-master-catalog/default/dw15f5ae0e/images/large/158250-1374-01-NEXIS_SPINNER_M_PETROL_BLUE.jpg' },
-  { id: 'viaggio', name: 'Viaggio di Nozze', price: 15000, desc: 'Il viaggio dei nostri sogni', img: null },
-  { id: 'tavolo', name: 'Tavolo Calligaris Cameo', price: 5000, desc: 'Design italiano per la nostra casa', img: 'https://www.calligaris.com/media/catalog/product/cache/fbe9f3c3d5e28c680df8c24ca8148804/C/S/CS4124-S-165_P174_BASE_P18W.jpg' },
-  { id: 'bitcoin', name: 'Acquisto Bitcoin', price: 5000, desc: 'Un investimento per il futuro', img: null, isBtc: true },
-  { id: 'dyson', name: 'Dyson V16', price: 1000, desc: 'L\'aspirapolvere dei nostri sogni', img: 'https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/394432-01.png' },
-  { id: 'bimby', name: 'Bimby TM7', price: 1599, desc: 'Per cucinare insieme ogni giorno', img: 'https://www.thermomix.com/fileadmin/user_upload/content/products/TM7/TM7_hero.jpg' },
+  { id: 'valige', name: 'Set di Valigie Piquadro', price: 1000, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.samsonite.it/dw/image/v2/BDKK_PRD/on/demandware.static/-/Sites-samsonite-master-catalog/default/dw15f5ae0e/images/large/158250-1374-01-NEXIS_SPINNER_M_PETROL_BLUE.jpg' },
+  { id: 'viaggio', name: 'Viaggio di Nozze', price: 15000, desc: 'Messico · Giamaica · New York', img: null },
+  { id: 'Tavolo', name: 'Tavolo Calligaris Cameo', price: 5000, desc: 'Design italiano per la nostra casa', img: 'https://www.calligaris.com/media/catalog/product/cache/fbe9f3c3d5e28c680df8c24ca8148804/C/S/CS4124-S-165_P174_BASE_P18W.jpg' },
+  { id: 'Bitcoin', name: 'Acquisto Bitcoin', price: 10000, desc: 'Un investimento per il futuro', img: null, isBtc: true },
+  { id: 'Dyson', name: 'Dyson V16', price: 1000, desc: 'L\'aspirapolvere dei nostri sogni', img: 'https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/394432-01.png' },
+  { id: 'scrivania', name: 'Scrivania + Sedia per lo Studio', price: 2000, desc: 'Per lavorare insieme ogni giorno', img: null },
 ];
 
 let currentGiftId = null;
@@ -1373,15 +1195,13 @@ function openModal(giftId) {
   const qrDiv = document.getElementById('qrcode-container');
   qrDiv.innerHTML = '';
   const qrText = `IBAN: ${IBAN}\nIntestatario: Montozzi Federico e Meldolesi Francesca\nCausale: Regalo ${gift.name}`;
-  try {
-    new QRCode(qrDiv, {
-      text: qrText,
-      width: 140, height: 140,
-      colorDark: '#2A2720',
-      colorLight: '#F8F4EE',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  } catch(e) {}
+  const canvas = document.createElement('canvas');
+  qrDiv.appendChild(canvas);
+  QRCode.toCanvas(canvas, qrText, {
+    width: 140,
+    margin: 1,
+    color: { dark: '#2A2720', light: '#F8F4EE' }
+  }).catch(() => { qrDiv.innerHTML = ''; });
   
   document.getElementById('modal-regalo').classList.add('active');
 }
@@ -1419,17 +1239,6 @@ function closeGrazie() {
   document.getElementById('modal-grazie').classList.remove('active');
 }
 
-// ── RSVP ──
-function submitRSVP() {
-  const nome = document.getElementById('rsvp-nome').value.trim();
-  const presenza = document.querySelector('input[name="presenza"]:checked');
-  if (!nome) { alert('Inserisci il tuo nome'); return; }
-  if (!presenza) { alert('Indica se parteciperai'); return; }
-  
-  document.getElementById('rsvp-form-wrap').querySelectorAll('input, select, textarea, button').forEach(el => el.style.display = 'none');
-  document.getElementById('rsvp-form-wrap').querySelectorAll('.form-row').forEach(el => el.style.display = 'none');
-  document.getElementById('rsvp-success').style.display = 'block';
-}
 
 // ── GUESTBOOK ──
 function toggleAnon() {
