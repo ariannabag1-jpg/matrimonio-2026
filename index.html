@@ -408,7 +408,7 @@ section { padding: 6rem 2rem; }
   width: 100%; height: 100%; object-fit: cover;
 }
 .gift-img-wrap.contain img {
-  object-fit: contain; padding: 1rem; background: var(--white);
+  object-fit: contain; padding: 0.3rem; background: var(--white);
 }
 .gift-img-wrap .gift-emoji {
   font-size: 4rem;
@@ -1087,7 +1087,6 @@ footer {
         <p class="info-card-text">
           L'Antico Borgo di Sutri si trova a circa <strong>50 km da Roma</strong>, facilmente raggiungibile in 45–50 min via <strong>Via Cassia (SR2)</strong>.<br><br>
           <strong>In auto:</strong> Via Cassia è l'opzione più panoramica e diretta.<br><br>
-          <strong>Navetta:</strong> Se siete in tanti senza auto, vi suggeriamo di organizzarvi in gruppi e condividere il passaggio. Scrivete nella sezione RSVP se ne avete bisogno!
         </p>
       </div>
     </div>
@@ -1101,9 +1100,8 @@ footer {
     <div class="section-label">Lista Nozze</div>
     <h2 class="section-title">I Nostri Desideri</h2>
     <div class="section-divider"></div>
-    <p style="text-align:center; color:var(--text-mid); font-size:0.85rem; margin-bottom:2.5rem; font-family:var(--font-display); font-style:italic; line-height:1.8;">
-      Il vostro affetto è già il regalo più bello. Se volete contribuire ai nostri sogni,<br>
-      selezionate un regalo e troverete l'IBAN per il bonifico. Grazie di cuore.
+    <p style="text-align:center; color:var(--text-mid); font-size:1.3rem; margin-bottom:2.5rem; font-family:var(--font-display); font-style:italic; line-height:1.8;">
+      La vostra presenza è il regalo più importante, ma se volete contribuire ai nostri sogni, potete farlo cliccando qui sotto e partecipando, con altri, a un regalo speciale. Grazie di cuore.
     </p>
     <div class="gifts-grid" id="gifts-grid">
       <!-- Populated by JS -->
@@ -1150,7 +1148,7 @@ footer {
     <div class="section-label">Per chi si ferma</div>
     <h2 class="section-title">Il Giorno Dopo</h2>
     <div class="section-divider"></div>
-    <p style="text-align:center; color:var(--text-mid); font-size:0.85rem; margin-bottom:2.5rem; font-family:var(--font-display); font-style:italic; line-height:1.8;">
+    <p style="text-align:center; color:var(--text-mid); font-size:1.3rem; margin-bottom:2.5rem; font-family:var(--font-display); font-style:italic; line-height:1.8;">
       Sutri e i suoi dintorni sono un tesoro da scoprire. Se vi fermate, ecco i nostri consigli.
     </p>
     <div class="dayafter-grid">
@@ -1303,9 +1301,9 @@ setInterval(updateCountdown, 1000);
 const IBAN = 'IT96N0301503200000004892449';
 const gifts = [
   { id: 'valige', name: 'Set di Valigie Piquadro', price: 1000, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.bagaglio.it/out/pictures/generated/product/1/768_768_85/d4/7f/ee/62939395abad591eadf96faabcc16b09_d47feee3b0be6d8d9459e660d789dfa3.jpg' },
-  { id: 'viaggio', name: 'Viaggio di Nozze', price: 15000, desc: 'Messico · Giamaica · New York', img: 'https://media.tacdn.com/media/attractions-splice-spp-674x446/07/8a/61/ea.jpg' },
+  { id: 'viaggio', name: 'Il nostro viaggio di nozze in Messico e Giamaica', price: 15000, desc: 'Messico · Giamaica · New York', img: 'https://cdn.turistipercaso.it/media?src=/uploads/2021/11/san-cristobal-mercato-streetfood-x26bx.jpg&sharpen&save-as=webp&aspect-ratio=16:9&crop-to-fit&w=1040&h=585&q=90' },
   { id: 'Tavolo', name: 'Tavolo Calligaris Cameo', price: 5000, desc: 'Design italiano per la nostra casa', img: 'https://images.ctfassets.net/g4f79vpjvbkb/1KRvFgsvvVq76tdF2hz6j6/b5a8fda837e732114436db2d21b14e47/Cameo_cs4124-S_P29L_P1GW_P31C_cs2226_P1GW_T2H_op.jpg?fm=jpg&fl=progressive&q=85&fit=fill&w=3420&h=2150' },
-  { id: 'Bitcoin', name: 'Acquisto Bitcoin', price: 10000, desc: 'Un investimento per il futuro', img: 'https://www.focus.it/site_stored/imgs/0005/030/bitcoin-2008262_1920.1020x680.jpg', },
+  { id: 'Bitcoin', name: 'Acquisto Bitcoin', price: 5000, desc: 'Un investimento per il futuro', img: 'https://www.focus.it/site_stored/imgs/0005/030/bitcoin-2008262_1920.1020x680.jpg', },
   { id: 'Dyson', name: 'Dyson V16', price: 1000, desc: 'L\'aspirapolvere dei nostri sogni', img: 'https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/hero/495948-01.png?cropPathE=desktop&fit=stretch,1&wid=2304', contain: true },
   { id: 'scrivania', name: 'Scrivania + Sedia per lo Studio', price: 2000, desc: 'Per lavorare insieme ogni giorno', img: 'https://img5.su-cdn.com/cdn-cgi/image/width=1000,height=1000/mall/file/2024/09/06/2500x2500_db979a2100519d3a9ac0f0f31e4d5001.jpg' },
 ];
