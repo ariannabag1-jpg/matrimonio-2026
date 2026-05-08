@@ -519,6 +519,16 @@ section { padding: 6rem 2rem; }
 }
 
 
+.qr-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 0.8rem 0 1.2rem;
+}
+#qr-code img { display: block; }
+.qr-label {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-light); margin-top: 0.6rem;
+}
+
 .modal-amount-row {
   display: flex; gap: 0.8rem; margin-top: 1rem;
 }
@@ -1120,6 +1130,10 @@ footer {
       <div class="iban-value">IT96 N030 1503 2000 0000 4892 449</div>
       <div class="iban-intestatario">Intestato a: Montozzi Federico e Meldolesi Francesca</div>
     </div>
+    <div class="qr-wrap">
+      <div id="qr-code"></div>
+      <div class="qr-label">Inquadra per salvare l'IBAN sul telefono</div>
+    </div>
     <p style="font-size:0.8rem; color:var(--text-mid); margin-bottom:0.5rem;">
       Indica nella causale del bonifico: <strong id="modal-causale">Regalo - [tuo nome]</strong>
     </p>
@@ -1255,6 +1269,7 @@ footer {
   <div style="margin-top:1.5rem; font-size:0.75rem; opacity:0.4; letter-spacing:0.1em;">Con amore</div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
@@ -1360,7 +1375,16 @@ function openModal(giftId) {
   document.getElementById('modal-gift-desc').textContent = `Costo totale: € ${gift.price.toLocaleString('it-IT')} — Causale consigliata:`;
   document.getElementById('modal-causale').textContent = `"Regalo ${gift.name} - [Il tuo nome]"`;
   document.getElementById('modal-amount').value = '';
-  
+
+  const qrEl = document.getElementById('qr-code');
+  qrEl.innerHTML = '';
+  new QRCode(qrEl, {
+    text: 'IBAN: IT96 N030 1503 2000 0000 4892 449\nIntestato a: Montozzi Federico e Meldolesi Francesca',
+    width: 160, height: 160,
+    colorDark: '#2A2720', colorLight: '#FFFFFF',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
   document.getElementById('modal-regalo').classList.add('active');
 }
 
