@@ -812,10 +812,15 @@ footer {
   .arrivare-grid { grid-template-columns: 1fr; }
   .tl-item { grid-template-columns: 1fr 40px 1fr; }
   .messages-wall { grid-template-columns: 1fr; }
-  .timeline::before { left: 20px; }
-  .tl-item { grid-template-columns: 40px 1fr; }
-  .tl-left { display: none; }
-  .tl-right { grid-column: 2; }
+  .timeline::before { left: 20px; transform: none; }
+  .tl-item {
+    grid-template-columns: 40px 1fr;
+    grid-template-areas: "dot time" "dot content";
+    align-items: start;
+  }
+  .tl-dot { grid-area: dot; margin-top: 0.5rem; }
+  .tl-left { display: block; grid-area: time; text-align: left; padding-right: 0; padding-left: 1rem; }
+  .tl-right { grid-area: content; padding-left: 1rem; padding-top: 0.2rem; }
   .countdown-wrap { gap: 1.5rem; }
 }
 </style>
