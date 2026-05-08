@@ -650,6 +650,7 @@ section { padding: 6rem 2rem; }
   max-width: 580px; margin: 0 auto 3.5rem;
   background: var(--white);
   padding: 2.5rem 3rem;
+  border: 1.5px solid var(--sage-light);
   box-shadow: 0 4px 32px rgba(42,39,32,0.07);
 }
 .form-row { margin-bottom: 1.8rem; }
@@ -671,6 +672,8 @@ section { padding: 6rem 2rem; }
 }
 .guestbook-form textarea:focus,
 .guestbook-form input[type="text"]:focus { border-bottom-color: var(--sage); }
+.guestbook-form textarea::placeholder,
+.guestbook-form input[type="text"]::placeholder { color: var(--text-mid); opacity: 1; }
 .guestbook-form textarea { min-height: 90px; line-height: 1.75; }
 
 .btn-primary {
@@ -806,7 +809,8 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
-  nav ul { gap: 1rem; }
+  nav { height: auto; padding: 0.6rem 1rem; }
+  nav ul { gap: 0.6rem 1rem; }
   nav a { font-size: 0.62rem; letter-spacing: 0.1em; }
   .luoghi-grid { grid-template-columns: 1fr; }
   .arrivare-grid { grid-template-columns: 1fr; }
@@ -1262,7 +1266,7 @@ footer {
       <div class="section-label">La nostra playlist</div>
       <h2 class="section-title">Suggerisci una Canzone</h2>
       <div class="section-divider"></div>
-      <p style="font-family:var(--font-display); font-style:italic; color:var(--text-mid); line-height:1.8;">
+      <p style="font-family:var(--font-display); font-style:italic; color:var(--text-mid); line-height:1.8; font-size: 1.3rem;">
         Aiutateci a costruire la colonna sonora della nostra serata!<br>
         Suggeriteci la canzone che non può mancare!
       </p>
@@ -1331,7 +1335,7 @@ setInterval(updateCountdown, 1000);
 // ── GIFTS ──
 const IBAN = 'IT96N0301503200000004892449';
 const gifts = [
-  { id: 'valige', name: 'Set di Valigie Piquadro', price: 1000, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.bagaglio.it/out/pictures/generated/product/1/768_768_85/d4/7f/ee/62939395abad591eadf96faabcc16b09_d47feee3b0be6d8d9459e660d789dfa3.jpg' },
+  { id: 'valige', name: 'Set di Valigie Piquadro', price: 1000, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.bagaglio.it/out/pictures/generated/product/1/768_768_85/d4/7f/ee/62939395abad591eadf96faabcc16b09_d47feee3b0be6d8d9459e660d789dfa3.jpg', contain: true },
   { id: 'viaggio', name: 'Il nostro viaggio di nozze in Messico e Giamaica', price: 15000, desc: 'Messico · Giamaica · New York', img: 'https://cdn.turistipercaso.it/media?src=/uploads/2021/11/san-cristobal-mercato-streetfood-x26bx.jpg&sharpen&save-as=webp&aspect-ratio=16:9&crop-to-fit&w=1040&h=585&q=90' },
   { id: 'Tavolo', name: 'Tavolo Calligaris Cameo', price: 5000, desc: 'Design italiano per la nostra casa', img: 'https://images.ctfassets.net/g4f79vpjvbkb/1KRvFgsvvVq76tdF2hz6j6/b5a8fda837e732114436db2d21b14e47/Cameo_cs4124-S_P29L_P1GW_P31C_cs2226_P1GW_T2H_op.jpg?fm=jpg&fl=progressive&q=85&fit=fill&w=3420&h=2150' },
   { id: 'Bitcoin', name: 'Acquisto Bitcoin', price: 5000, desc: 'Un investimento per il futuro', img: 'https://www.focus.it/site_stored/imgs/0005/030/bitcoin-2008262_1920.1020x680.jpg', },
