@@ -1390,18 +1390,33 @@ async function loadGifts() {
 }
 
 function copyIban(btn) {
-  navigator.clipboard.writeText('IT96N0301503200000004892449').then(() => {
+  const iban = 'IT96N0301503200000004892449';
+  const confirm = () => {
     btn.textContent = 'Copiato!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'Copia IBAN'; btn.classList.remove('copied'); }, 2000);
-  });
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(iban).then(confirm).catch(() => fallbackCopy(iban, confirm));
+  } else {
+    fallbackCopy(iban, confirm);
+  }
+}
+function fallbackCopy(text, callback) {
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+  document.body.appendChild(el);
+  el.focus(); el.select();
+  try { document.execCommand('copy'); callback(); } catch(e) {}
+  document.body.removeChild(el);
 }
 
 function openModal(giftId) {
   currentGiftId = giftId;
   const gift = gifts.find(g => g.id === giftId);
   document.getElementById('modal-gift-name').textContent = gift.name;
-  document.getElementById('modal-gift-desc').textContent = `Costo totale: € ${gift.price.toLocaleString('it-IT')} — Causale consigliata:`;
+  document.getElementById('modal-gift-desc').textContent = `Costo totale: € ${gift.price.toLocaleString('it-IT')} `;
   document.getElementById('modal-causale').textContent = `"Regalo ${gift.name} - [Il tuo nome]"`;
   document.getElementById('modal-amount').value = '';
 
