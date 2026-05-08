@@ -519,6 +519,17 @@ section { padding: 6rem 2rem; }
 }
 
 
+.copy-iban-btn {
+  display: block; width: 100%; margin-top: 0.9rem;
+  background: var(--sage); color: var(--white);
+  border: none; padding: 0.65rem 1rem;
+  font-family: var(--font-body); font-size: 0.68rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; transition: background 0.2s;
+}
+.copy-iban-btn:hover { background: var(--sage-dark); }
+.copy-iban-btn.copied { background: var(--sage-dark); }
+
 .qr-wrap {
   display: flex; flex-direction: column; align-items: center;
   margin: 0.8rem 0 1.2rem;
@@ -1129,10 +1140,11 @@ footer {
       <span class="iban-label">IBAN</span>
       <div class="iban-value">IT96 N030 1503 2000 0000 4892 449</div>
       <div class="iban-intestatario">Intestato a: Montozzi Federico e Meldolesi Francesca</div>
+      <button class="copy-iban-btn" onclick="copyIban(this)">Copia IBAN</button>
     </div>
     <div class="qr-wrap">
       <div id="qr-code"></div>
-      <div class="qr-label">Inquadra per salvare l'IBAN sul telefono</div>
+      <div class="qr-label">Oppure inquadra con l'app della tua banca</div>
     </div>
     <p style="font-size:0.8rem; color:var(--text-mid); margin-bottom:0.5rem;">
       Indica nella causale del bonifico: <strong id="modal-causale">Regalo - [tuo nome]</strong>
@@ -1368,6 +1380,14 @@ async function loadGifts() {
   }
 }
 
+function copyIban(btn) {
+  navigator.clipboard.writeText('IT96N0301503200000004892449').then(() => {
+    btn.textContent = 'Copiato!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copia IBAN'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
 function openModal(giftId) {
   currentGiftId = giftId;
   const gift = gifts.find(g => g.id === giftId);
@@ -1379,7 +1399,7 @@ function openModal(giftId) {
   const qrEl = document.getElementById('qr-code');
   qrEl.innerHTML = '';
   new QRCode(qrEl, {
-    text: 'IBAN: IT96 N030 1503 2000 0000 4892 449\nIntestato a: Montozzi Federico e Meldolesi Francesca',
+    text: 'IT96N0301503200000004892449',
     width: 160, height: 160,
     colorDark: '#2A2720', colorLight: '#FFFFFF',
     correctLevel: QRCode.CorrectLevel.M
