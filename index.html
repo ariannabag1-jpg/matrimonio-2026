@@ -13,9 +13,9 @@
   --cream: #F8F4EE;
   --cream-mid: #EEE6D8;
   --cream-dark: #DDD0BC;
-  --sage: #7A9268;
-  --sage-light: #A8BF99;
-  --sage-dark: #556849;
+  --sage: #4e6b3c;
+  --sage-light: #7A9268;
+  --sage-dark: #384f2b;
   --sage-pale: #EDF2E9;
   --gold: #BFA06A;
   --gold-light: #D4B87A;
@@ -47,6 +47,7 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 1.5rem;
   height: 58px;
+  position: relative;
 }
 .nav-brand {
   font-family: var(--font-script);
@@ -70,7 +71,7 @@ nav {
 .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 .nav-menu {
   list-style: none;
-  position: absolute; top: 58px; left: 0; right: 0;
+  position: absolute; top: 58px; left: -1.5rem; right: -1.5rem;
   background: rgba(248,244,238,0.98);
   max-height: 0; overflow: hidden;
   transition: max-height 0.35s ease, padding 0.35s;
@@ -102,7 +103,7 @@ nav {
     position: static; max-height: none !important; overflow: visible;
     display: flex; flex-direction: row; gap: 2rem;
     padding: 0 !important; border-bottom: none;
-    background: transparent;
+    background: transparent; width: auto; left: auto; right: auto;
   }
   .nav-menu li a { padding: 0; }
 }
@@ -190,7 +191,7 @@ nav {
 
 .hero-ampersand {
   font-family: var(--font-script);
-  font-size: clamp(5rem, 12vw, 9rem);
+  font-size: clamp(2.8rem, 7vw, 5rem);
   color: var(--text-mid);
   line-height: 0.8;
   display: block;
@@ -874,20 +875,20 @@ footer {
 <nav>
   <div class="nav-inner">
     <span class="nav-brand">F &amp; F</span>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="#hero" onclick="closeNav()">Home</a></li>
+      <li><a href="#programma" onclick="closeNav()">Programma</a></li>
+      <li><a href="#luoghi" onclick="closeNav()">I Luoghi</a></li>
+      <li><a href="#arrivare" onclick="closeNav()">Come Arrivare</a></li>
+      <li><a href="#lista-nozze" onclick="closeNav()">Lista Nozze</a></li>
+      <li><a href="#day-after" onclick="closeNav()">Il Giorno Dopo</a></li>
+      <li><a href="#guestbook" onclick="closeNav()">Guestbook</a></li>
+      <li><a href="#spotify" onclick="closeNav()">Playlist</a></li>
+    </ul>
     <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-label="Apri menu">
       <span></span><span></span><span></span>
     </button>
   </div>
-  <ul class="nav-menu" id="nav-menu">
-    <li><a href="#hero" onclick="closeNav()">Home</a></li>
-    <li><a href="#programma" onclick="closeNav()">Programma</a></li>
-    <li><a href="#luoghi" onclick="closeNav()">I Luoghi</a></li>
-    <li><a href="#arrivare" onclick="closeNav()">Come Arrivare</a></li>
-    <li><a href="#lista-nozze" onclick="closeNav()">Lista Nozze</a></li>
-    <li><a href="#day-after" onclick="closeNav()">Il Giorno Dopo</a></li>
-    <li><a href="#guestbook" onclick="closeNav()">Guestbook</a></li>
-    <li><a href="#spotify" onclick="closeNav()">Playlist</a></li>
-  </ul>
 </nav>
 
 <!-- HERO -->
