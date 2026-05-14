@@ -39,19 +39,50 @@ body {
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  background: rgba(248,244,238,0.95);
+  background: rgba(248,244,238,0.97);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--cream-dark);
-  padding: 0 2rem;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
   height: 58px;
-  display: flex; align-items: center; justify-content: center;
 }
-nav ul {
+.nav-brand {
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  color: var(--sage);
+  line-height: 1;
+}
+.nav-toggle {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px; width: 36px; height: 36px;
+}
+.nav-toggle span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--text-mid);
+  transition: all 0.3s;
+  transform-origin: center;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.nav-menu {
   list-style: none;
-  display: flex; gap: 2rem;
-  flex-wrap: wrap; justify-content: center;
+  position: absolute; top: 58px; left: 0; right: 0;
+  background: rgba(248,244,238,0.98);
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s;
+  border-bottom: 0px solid var(--cream-dark);
 }
-nav a {
+.nav-menu.open {
+  max-height: 420px;
+  padding: 0.5rem 0 1.2rem;
+  border-bottom-width: 1px;
+}
+.nav-menu li a {
+  display: block; padding: 0.65rem 2rem;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 500;
@@ -59,9 +90,22 @@ nav a {
   text-transform: uppercase;
   color: var(--text-mid);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.2s;
 }
-nav a:hover { color: var(--sage-dark); }
+.nav-menu li a:hover { color: var(--sage-dark); }
+
+@media (min-width: 768px) {
+  .nav-inner { justify-content: center; }
+  .nav-brand { display: none; }
+  .nav-toggle { display: none; }
+  .nav-menu {
+    position: static; max-height: none !important; overflow: visible;
+    display: flex; flex-direction: row; gap: 2rem;
+    padding: 0 !important; border-bottom: none;
+    background: transparent;
+  }
+  .nav-menu li a { padding: 0; }
+}
 
 /* ── HERO ── */
 #hero {
@@ -146,8 +190,8 @@ nav a:hover { color: var(--sage-dark); }
 
 .hero-ampersand {
   font-family: var(--font-script);
-  font-size: clamp(6rem, 15vw, 12rem);
-  color: var(--sage-light);
+  font-size: clamp(5rem, 12vw, 9rem);
+  color: var(--text-mid);
   line-height: 0.8;
   display: block;
   margin: 0.3rem 0;
@@ -160,7 +204,7 @@ nav a:hover { color: var(--sage-dark); }
   font-size: clamp(3.5rem, 9vw, 7.5rem);
   font-weight: 300;
   letter-spacing: 0.08em;
-  color: var(--text);
+  color: var(--sage);
   line-height: 1;
   opacity: 0;
   animation: fadeUp 1s 0.5s forwards;
@@ -809,9 +853,6 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
-  nav { height: auto; padding: 0.6rem 1rem; }
-  nav ul { gap: 0.6rem 1rem; }
-  nav a { font-size: 0.62rem; letter-spacing: 0.1em; }
   .luoghi-grid { grid-template-columns: 1fr; }
   .arrivare-grid { grid-template-columns: 1fr; }
   .tl-item { grid-template-columns: 1fr 40px 1fr; }
@@ -831,15 +872,21 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <ul>
-    <li><a href="#hero">Home</a></li>
-    <li><a href="#programma">Programma</a></li>
-    <li><a href="#luoghi">I Luoghi</a></li>
-    <li><a href="#arrivare">Come Arrivare</a></li>
-    <li><a href="#lista-nozze">Lista Nozze</a></li>
-    <li><a href="#day-after">Il Giorno Dopo</a></li>
-    <li><a href="#guestbook">Guestbook</a></li>
-    <li><a href="#spotify">Playlist</a></li>
+  <div class="nav-inner">
+    <span class="nav-brand">F &amp; F</span>
+    <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-label="Apri menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <ul class="nav-menu" id="nav-menu">
+    <li><a href="#hero" onclick="closeNav()">Home</a></li>
+    <li><a href="#programma" onclick="closeNav()">Programma</a></li>
+    <li><a href="#luoghi" onclick="closeNav()">I Luoghi</a></li>
+    <li><a href="#arrivare" onclick="closeNav()">Come Arrivare</a></li>
+    <li><a href="#lista-nozze" onclick="closeNav()">Lista Nozze</a></li>
+    <li><a href="#day-after" onclick="closeNav()">Il Giorno Dopo</a></li>
+    <li><a href="#guestbook" onclick="closeNav()">Guestbook</a></li>
+    <li><a href="#spotify" onclick="closeNav()">Playlist</a></li>
   </ul>
 </nav>
 
@@ -996,7 +1043,7 @@ footer {
   <div class="hero-title-wrap">
     <div class="hero-date-line">27 · Settembre · 2026</div>
     <div class="hero-names">Federico</div>
-    <span class="hero-ampersand">&</span>
+    <span class="hero-ampersand">e</span>
     <div class="hero-names">Francesca</div>
     <div class="hero-divider"></div>
     <div class="hero-subtitle">Ci sposiamo e vogliamo festeggiare con voi</div>
@@ -1148,7 +1195,7 @@ footer {
     <div class="iban-box">
       <span class="iban-label">IBAN</span>
       <div class="iban-value">IT96 N030 1503 2000 0000 4892 449</div>
-      <div class="iban-intestatario">Intestato a: Montozzi Federico e Meldolesi Francesca</div>
+      <div class="iban-intestatario">Intestato a: Federico Montozzi e Francesca Meldolesi</div>
       <button class="copy-iban-btn" onclick="copyIban(this)">Copia IBAN</button>
     </div>
     <div class="qr-wrap">
@@ -1387,6 +1434,17 @@ async function loadGifts() {
       </div>`;
     grid.appendChild(card);
   }
+}
+
+function toggleNav() {
+  const menu = document.getElementById('nav-menu');
+  const toggle = document.getElementById('nav-toggle');
+  menu.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('nav-menu').classList.remove('open');
+  document.getElementById('nav-toggle').classList.remove('open');
 }
 
 function copyIban(btn) {
