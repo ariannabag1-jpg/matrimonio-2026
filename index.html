@@ -146,14 +146,17 @@ nav {
 }
 .hero-side-botanical.left {
   left: max(1%, 4px);
-  transform: translateY(-50%) scaleX(-1);
+  transform: translateY(-50%);
 }
 .hero-side-botanical.right {
   right: max(1%, 4px);
-  transform: translateY(-50%);
+  transform: translateY(-50%) scaleX(-1);
 }
 @media (max-width: 640px) {
-  .hero-side-botanical { width: clamp(90px, 18vw, 130px); }
+  .hero-side-botanical { width: clamp(70px, 14vw, 100px); opacity: 0.75; }
+}
+@media (max-width: 480px) {
+  .hero-side-botanical { width: clamp(55px, 12vw, 80px); opacity: 0.6; top: 42%; }
 }
 @media (max-width: 380px) {
   .hero-side-botanical { display: none; }
