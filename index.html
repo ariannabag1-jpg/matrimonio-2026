@@ -146,17 +146,53 @@ nav {
 }
 .hero-side-botanical.left {
   left: max(1%, 4px);
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) scaleX(-1);
 }
 .hero-side-botanical.right {
   right: max(1%, 4px);
-  transform: translateY(-50%) rotate(180deg) scaleX(-1);
+  transform: translateY(-50%);
 }
 @media (max-width: 640px) {
   .hero-side-botanical { width: clamp(90px, 18vw, 130px); }
 }
 @media (max-width: 380px) {
   .hero-side-botanical { display: none; }
+}
+
+/* ── SECTION BOTANICALS ── */
+.section-botanical {
+  position: absolute;
+  pointer-events: none;
+  top: 50%;
+  width: clamp(90px, 11vw, 155px);
+  height: auto;
+  opacity: 0.82;
+  z-index: 0;
+}
+.section-botanical.left {
+  left: max(0.5%, 2px);
+  transform: translateY(-50%) scaleX(-1);
+}
+.section-botanical.right {
+  right: max(0.5%, 2px);
+  transform: translateY(-50%);
+}
+.section-botanical.at-top {
+  top: 12%;
+}
+.section-botanical.at-top.left { transform: scaleX(-1); }
+.section-botanical.at-top.right { transform: none; }
+.section-botanical.at-bottom {
+  top: auto;
+  bottom: 8%;
+}
+.section-botanical.at-bottom.left { transform: scaleX(-1); }
+.section-botanical.at-bottom.right { transform: none; }
+@media (max-width: 640px) {
+  .section-botanical { width: clamp(55px, 13vw, 90px); opacity: 0.65; }
+}
+@media (max-width: 380px) {
+  .section-botanical { display: none; }
 }
 
 .hero-title-wrap {
@@ -255,7 +291,7 @@ nav {
 }
 
 /* ── SECTION SHARED ── */
-section { padding: 6rem 2rem; }
+section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 .section-inner { max-width: 900px; margin: 0 auto; }
 .section-label {
   font-family: var(--font-display);
@@ -924,6 +960,7 @@ footer {
 
 <!-- PROGRAMMA -->
 <section id="programma">
+  <img class="section-botanical left" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">La Giornata</div>
     <h2 class="section-title">Il Programma</h2>
@@ -965,6 +1002,7 @@ footer {
 
 <!-- I LUOGHI -->
 <section id="luoghi">
+  <img class="section-botanical right" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">Dove e quando</div>
     <h2 class="section-title">I Luoghi</h2>
@@ -1007,6 +1045,7 @@ footer {
 
 <!-- COME ARRIVARE -->
 <section id="arrivare">
+  <img class="section-botanical left" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">Logistica</div>
     <h2 class="section-title">Come Arrivare</h2>
@@ -1039,6 +1078,8 @@ footer {
 
 <!-- LISTA NOZZE -->
 <section id="lista-nozze">
+  <img class="section-botanical right at-top" src="./foglia.png" alt="">
+  <img class="section-botanical left at-bottom" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label" style="font-size:0.82rem;">Lista Nozze</div>
     <h2 class="section-title" style="font-size:clamp(1.2rem,2.5vw,1.8rem);">I Nostri Desideri</h2>
@@ -1092,6 +1133,7 @@ footer {
 
 <!-- DAY AFTER -->
 <section id="day-after">
+  <img class="section-botanical right" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">Per chi si ferma</div>
     <h2 class="section-title">Il Giorno Dopo</h2>
@@ -1147,6 +1189,7 @@ footer {
 
 <!-- GUESTBOOK -->
 <section id="guestbook">
+  <img class="section-botanical left" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">Lasciate un segno</div>
     <h2 class="section-title">Guestbook</h2>
@@ -1174,6 +1217,7 @@ footer {
 
 <!-- SPOTIFY -->
 <section id="spotify">
+  <img class="section-botanical right" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="spotify-box">
       <div class="section-label">La nostra playlist</div>
