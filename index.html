@@ -584,16 +584,58 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   padding: 2.5rem;
   position: relative;
   animation: modalIn 0.3s ease;
+  max-height: 88vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 @keyframes modalIn {
   from { opacity: 0; transform: scale(0.95) translateY(20px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 .modal-close {
-  position: absolute; top: 1rem; right: 1.2rem;
+  position: absolute; top: 0.6rem; right: 0.6rem;
   background: none; border: none;
-  font-size: 1.4rem; cursor: pointer;
+  font-size: 1.2rem; cursor: pointer;
   color: var(--text-light);
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  touch-action: manipulation;
+}
+.modal-close-bar {
+  display: none;
+}
+@media (max-width: 640px) {
+  .modal-overlay { align-items: flex-end; padding: 0; }
+  .modal-box {
+    max-width: 100%; width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+    padding: 1.5rem 1.5rem 2rem;
+    animation: modalSlideUp 0.3s ease;
+  }
+  @keyframes modalSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  .modal-close { display: none; }
+  .modal-close-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--cream-dark);
+  }
+  .modal-close-bar-label {
+    font-family: var(--font-display);
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .modal-close-bar-btn {
+    background: var(--cream-mid); border: none;
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 1.3rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-mid); touch-action: manipulation;
+  }
 }
 .modal-title {
   font-family: var(--font-display);
@@ -1118,6 +1160,10 @@ footer {
 <div class="modal-overlay" id="modal-regalo">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-close-bar">
+      <span class="modal-close-bar-label">Dettagli regalo</span>
+      <button class="modal-close-bar-btn" onclick="closeModal()" aria-label="Chiudi">&times;</button>
+    </div>
     <div class="modal-title" id="modal-gift-name">Regalo</div>
     <div class="modal-subtitle" id="modal-gift-desc">Vuoi contribuire a questo regalo?</div>
     <div class="iban-box">
@@ -1360,7 +1406,7 @@ async function loadGifts() {
         <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
         <div class="progress-label"><span>${pct}% raggiunto</span><span>€ ${contributed.toLocaleString('it-IT')} / ${gift.price.toLocaleString('it-IT')}</span></div>
         <button class="gift-btn ${completed ? 'completed' : ''}" onclick="openModal('${gift.id}')" ${completed ? 'disabled' : ''}>
-          ${completed ? 'Completamente coperto' : 'Voglio regalarlo →'}
+          ${completed ? 'Completamente coperto' : 'Voglio partecipare →'}
         </button>
       </div>`;
     grid.appendChild(card);
