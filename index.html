@@ -1382,47 +1382,61 @@ const gifts = [
 
 let currentGiftId = null;
 
+function renderGiftCard(gift, contributed) {
+  const pct = Math.min(100, Math.round((contributed / gift.price) * 100));
+  const completed = pct >= 100;
+  let imgHtml = '';
+  if (gift.isBtc) {
+    imgHtml = `<div class="gift-img-wrap" style="background:#F7931A20; font-size:5rem; display:flex; align-items:center; justify-content:center;">
+      <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="50" fill="#F7931A"/>
+        <text x="50" y="68" text-anchor="middle" font-size="55" font-weight="bold" fill="white" font-family="Arial">₿</text>
+      </svg>
+    </div>`;
+  } else if (gift.img) {
+    imgHtml = `<div class="gift-img-wrap${gift.contain ? ' contain' : ''}"><img src="${gift.img}" alt="${gift.name}" loading="lazy" onerror="this.style.display='none'"></div>`;
+  } else {
+    imgHtml = `<div class="gift-img-wrap gift-no-img"><span class="gift-name-placeholder">${gift.name}</span></div>`;
+  }
+  const card = document.createElement('div');
+  card.className = 'gift-card';
+  card.dataset.giftId = gift.id;
+  card.innerHTML = `
+    ${imgHtml}
+    <div class="gift-body">
+      <div class="gift-name">${gift.name}</div>
+      <div class="gift-price">€ ${gift.price.toLocaleString('it-IT')}</div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+      <div class="progress-label"><span>${pct}% raggiunto</span><span>€ ${contributed.toLocaleString('it-IT')} / ${gift.price.toLocaleString('it-IT')}</span></div>
+      <button class="gift-btn ${completed ? 'completed' : ''}" onclick="openModal('${gift.id}')" ${completed ? 'disabled' : ''}>
+        ${completed ? 'Completamente coperto' : 'Voglio partecipare →'}
+      </button>
+    </div>`;
+  return card;
+}
+
 async function loadGifts() {
   const grid = document.getElementById('gifts-grid');
   grid.innerHTML = '';
+
+  // Render cards immediately at 0% for instant visual feedback
   for (const gift of gifts) {
-    let contributed = 0;
-    try {
-      const doc = await db.collection('gifts').doc(gift.id).get();
-      if (doc.exists) contributed = doc.data().amount || 0;
-    } catch(e) {}
-    const pct = Math.min(100, Math.round((contributed / gift.price) * 100));
-    const completed = pct >= 100;
-    
-    let imgHtml = '';
-    if (gift.isBtc) {
-      imgHtml = `<div class="gift-img-wrap" style="background:#F7931A20; font-size:5rem; display:flex; align-items:center; justify-content:center;">
-        <svg viewBox="0 0 100 100" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="50" fill="#F7931A"/>
-          <text x="50" y="68" text-anchor="middle" font-size="55" font-weight="bold" fill="white" font-family="Arial">₿</text>
-        </svg>
-      </div>`;
-    } else if (gift.img) {
-      imgHtml = `<div class="gift-img-wrap${gift.contain ? ' contain' : ''}"><img src="${gift.img}" alt="${gift.name}" onerror="this.style.display='none'"></div>`;
-    } else {
-      imgHtml = `<div class="gift-img-wrap gift-no-img"><span class="gift-name-placeholder">${gift.name}</span></div>`;
-    }
-    
-    const card = document.createElement('div');
-    card.className = 'gift-card';
-    card.innerHTML = `
-      ${imgHtml}
-      <div class="gift-body">
-        <div class="gift-name">${gift.name}</div>
-        <div class="gift-price">€ ${gift.price.toLocaleString('it-IT')}</div>
-        <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-        <div class="progress-label"><span>${pct}% raggiunto</span><span>€ ${contributed.toLocaleString('it-IT')} / ${gift.price.toLocaleString('it-IT')}</span></div>
-        <button class="gift-btn ${completed ? 'completed' : ''}" onclick="openModal('${gift.id}')" ${completed ? 'disabled' : ''}>
-          ${completed ? 'Completamente coperto' : 'Voglio partecipare →'}
-        </button>
-      </div>`;
-    grid.appendChild(card);
+    grid.appendChild(renderGiftCard(gift, 0));
   }
+
+  // Single Firestore query for all contributions instead of N sequential reads
+  try {
+    const snap = await db.collection('gifts').get();
+    const dataMap = {};
+    snap.forEach(doc => { dataMap[doc.id] = doc.data().amount || 0; });
+    for (const gift of gifts) {
+      const contributed = dataMap[gift.id] || 0;
+      if (contributed > 0) {
+        const existing = grid.querySelector(`[data-gift-id="${gift.id}"]`);
+        if (existing) existing.replaceWith(renderGiftCard(gift, contributed));
+      }
+    }
+  } catch(e) {}
 }
 
 function toggleNav() {
