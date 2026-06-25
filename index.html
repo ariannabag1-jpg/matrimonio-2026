@@ -139,10 +139,10 @@ nav {
 .hero-side-botanical {
   position: absolute;
   pointer-events: none;
-  top: 50%;
-  width: clamp(160px, 17vw, 260px);
+  top: 42%;
+  width: clamp(55px, 12vw, 80px);
   height: auto;
-  opacity: 0.93;
+  opacity: 0.6;
   z-index: 0;
 }
 .hero-side-botanical.left {
@@ -153,33 +153,30 @@ nav {
   right: max(1%, 4px);
   transform: translateY(-50%) scaleX(-1);
 }
-@media (max-width: 640px) {
-  .hero-side-botanical { width: clamp(70px, 14vw, 100px); opacity: 0.75; }
+@media (min-width: 481px) {
+  .hero-side-botanical { width: clamp(70px, 14vw, 100px); opacity: 0.75; top: 50%; }
 }
-@media (max-width: 480px) {
-  .hero-side-botanical { width: clamp(55px, 12vw, 80px); opacity: 0.6; top: 42%; }
-}
-@media (max-width: 380px) {
-  .hero-side-botanical { display: none; }
+@media (min-width: 641px) {
+  .hero-side-botanical { width: clamp(160px, 17vw, 260px); opacity: 0.93; }
 }
 
 /* ── SECTION BOTANICALS ── */
 .section-botanical {
   position: absolute;
   pointer-events: none;
-  top: 50%;
-  width: clamp(90px, 11vw, 155px);
+  top: 1.2rem;
+  width: clamp(50px, 12vw, 75px);
   height: auto;
-  opacity: 0.82;
+  opacity: 0.55;
   z-index: 0;
 }
 .section-botanical.left {
   left: max(0.5%, 2px);
-  transform: translateY(-50%) scaleX(-1);
+  transform: scaleX(-1);
 }
 .section-botanical.right {
   right: max(0.5%, 2px);
-  transform: translateY(-50%);
+  transform: none;
 }
 .section-botanical.at-top {
   top: 12%;
@@ -192,34 +189,26 @@ nav {
 }
 .section-botanical.at-bottom.left { transform: scaleX(-1); }
 .section-botanical.at-bottom.right { transform: none; }
-@media (max-width: 640px) {
-  .section-botanical {
-    width: clamp(50px, 12vw, 75px);
-    opacity: 0.55;
-    top: 1.2rem;
-  }
-  .section-botanical.left { transform: scaleX(-1); }
-  .section-botanical.right { transform: none; }
-  .section-botanical.at-top,
-  .section-botanical.at-bottom {
-    top: 1.2rem;
-    bottom: auto;
-  }
-  .section-botanical.at-top.left,
-  .section-botanical.at-bottom.left { transform: scaleX(-1); }
-  .section-botanical.at-top.right,
-  .section-botanical.at-bottom.right { transform: none; }
-  .section-botanical.at-bottom { display: none; }
-}
 @media (max-width: 380px) {
   .section-botanical { display: none; }
+}
+@media (min-width: 641px) {
+  .section-botanical { width: clamp(90px, 11vw, 155px); opacity: 0.82; top: 50%; }
+  .section-botanical.left { transform: translateY(-50%) scaleX(-1); }
+  .section-botanical.right { transform: translateY(-50%); }
+  .section-botanical.at-top { top: 12%; }
+  .section-botanical.at-top.left { transform: scaleX(-1); }
+  .section-botanical.at-top.right { transform: none; }
+  .section-botanical.at-bottom { display: block; top: auto; bottom: 8%; }
+  .section-botanical.at-bottom.left { transform: scaleX(-1); }
+  .section-botanical.at-bottom.right { transform: none; }
 }
 
 .hero-title-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 2rem;
+  padding: 1.5rem 1.8rem 1.8rem;
   position: relative;
 }
 
@@ -352,21 +341,21 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 .timeline::before {
   content: '';
   position: absolute;
-  left: 50%;
+  left: 20px;
   top: 0; bottom: 0;
   width: 1px;
   background: linear-gradient(to bottom, transparent, var(--sage-light), transparent);
-  transform: translateX(-50%);
 }
 .tl-item {
   display: grid;
-  grid-template-columns: 1fr 60px 1fr;
+  grid-template-columns: 40px 1fr;
+  grid-template-areas: "dot time" "dot content";
   gap: 0;
-  align-items: center;
+  align-items: start;
   padding: 2rem 0;
 }
-.tl-left { text-align: right; padding-right: 2rem; }
-.tl-right { padding-left: 2rem; }
+.tl-left { display: block; grid-area: time; text-align: left; padding-right: 0; padding-left: 1rem; }
+.tl-right { grid-area: content; padding-left: 1rem; padding-top: 0.2rem; }
 .tl-dot {
   width: 14px; height: 14px;
   border-radius: 50%;
@@ -375,6 +364,8 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   box-shadow: 0 0 0 1px var(--sage);
   margin: 0 auto;
   flex-shrink: 0;
+  grid-area: dot;
+  margin-top: 0.5rem;
 }
 .tl-time {
   font-family: var(--font-body);
@@ -405,8 +396,8 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 
 .luoghi-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: 2rem;
   margin-top: 1rem;
 }
 .luogo-card {
@@ -458,8 +449,8 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 
 .arrivare-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   margin-top: 0.5rem;
 }
 .info-card {
@@ -573,20 +564,21 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   position: fixed; inset: 0; z-index: 2000;
   background: rgba(42,39,32,0.7);
   backdrop-filter: blur(4px);
-  align-items: center; justify-content: center;
-  padding: 1rem;
+  align-items: flex-end; justify-content: center;
+  padding: 0;
 }
 .modal-overlay.active { display: flex; }
 
 .modal-box {
   background: var(--cream);
-  max-width: 480px; width: 100%;
-  padding: 2.5rem;
+  max-width: 100%; width: 100%;
+  padding: 1.5rem 1.5rem 2rem;
   position: relative;
-  animation: modalIn 0.3s ease;
-  max-height: 88vh;
+  animation: modalSlideUp 0.3s ease;
+  max-height: 92vh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 16px 16px 0 0;
 }
 @keyframes modalIn {
   from { opacity: 0; transform: scale(0.95) translateY(20px); }
@@ -604,20 +596,20 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 .modal-close-bar {
   display: none;
 }
-@media (max-width: 640px) {
-  .modal-overlay { align-items: flex-end; padding: 0; }
+@keyframes modalSlideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@media (min-width: 641px) {
+  .modal-overlay { align-items: center; padding: 1rem; }
   .modal-box {
-    max-width: 100%; width: 100%;
-    max-height: 92vh;
-    border-radius: 16px 16px 0 0;
-    padding: 1.5rem 1.5rem 2rem;
-    animation: modalSlideUp 0.3s ease;
+    max-width: 480px;
+    padding: 2.5rem;
+    border-radius: 0;
+    animation: modalIn 0.3s ease;
+    max-height: 88vh;
   }
-  @keyframes modalSlideUp {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
-  .modal-close { display: none; }
+  .modal-close { display: flex; }
   .modal-close-bar {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 1.2rem;
@@ -661,7 +653,9 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   color: var(--text); margin-bottom: 0.3rem;
 }
 .modal-subtitle {
-  font-size: 0.8rem; color: var(--text-light); margin-bottom: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1.4rem; font-weight: 400;
+  color: var(--sage-dark); margin-bottom: 1.5rem;
 }
 
 .iban-box {
@@ -699,7 +693,7 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 
 .qr-wrap {
   display: flex; flex-direction: column; align-items: center;
-  margin: 0.8rem 0 1.2rem;
+  margin: 0.4rem 0 0.6rem;
 }
 #qr-code img { display: block; }
 .qr-label {
@@ -865,7 +859,7 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
 
 .messages-wall {
   max-width: 780px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
+  display: grid; grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 .message-card {
@@ -977,22 +971,21 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
-@media (max-width: 640px) {
-  .hero-title-wrap { padding: 1.5rem 1.8rem 1.8rem; }
-  .luoghi-grid { grid-template-columns: 1fr; }
-  .arrivare-grid { grid-template-columns: 1fr; }
-  .tl-item { grid-template-columns: 1fr 40px 1fr; }
-  .messages-wall { grid-template-columns: 1fr; }
-  .timeline::before { left: 20px; transform: none; }
+/* ── DESKTOP OVERRIDES ── */
+@media (min-width: 641px) {
+  .hero-title-wrap { padding: 0 2rem; }
+  .luoghi-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .arrivare-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .messages-wall { grid-template-columns: 1fr 1fr; }
+  .timeline::before { left: 50%; transform: translateX(-50%); }
   .tl-item {
-    grid-template-columns: 40px 1fr;
-    grid-template-areas: "dot time" "dot content";
-    align-items: start;
+    grid-template-columns: 1fr 60px 1fr;
+    grid-template-areas: unset;
+    align-items: center;
   }
-  .tl-dot { grid-area: dot; margin-top: 0.5rem; }
-  .tl-left { display: block; grid-area: time; text-align: left; padding-right: 0; padding-left: 1rem; }
-  .tl-right { grid-area: content; padding-left: 1rem; padding-top: 0.2rem; }
-  .countdown-wrap { gap: 1.5rem; }
+  .tl-dot { grid-area: unset; margin-top: 0; }
+  .tl-left { grid-area: unset; text-align: right; padding-right: 2rem; padding-left: 0; }
+  .tl-right { grid-area: unset; padding-left: 2rem; padding-top: 0; }
 }
 </style>
 
@@ -1195,7 +1188,7 @@ footer {
       <div id="qr-code"></div>
       <div class="qr-label">Oppure inquadra con l'app della tua banca</div>
     </div>
-    <p style="font-size:0.8rem; color:var(--text-mid); margin-bottom:0.5rem;">
+    <p style="font-size:1.1rem; color:var(--text-mid); margin-bottom:0.8rem; font-family:var(--font-body);">
       Indica nella causale del bonifico: <strong id="modal-causale">Regalo - [tuo nome]</strong>
     </p>
     <div class="modal-amount-row">
@@ -1478,7 +1471,7 @@ function openModal(giftId) {
   qrEl.innerHTML = '';
   new QRCode(qrEl, {
     text: 'IT96N0301503200000004892449',
-    width: 160, height: 160,
+    width: 90, height: 90,
     colorDark: '#2A2720', colorLight: '#FFFFFF',
     correctLevel: QRCode.CorrectLevel.M
   });
