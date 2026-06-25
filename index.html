@@ -526,7 +526,7 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   color: var(--text); margin-bottom: 0.3rem;
 }
 .gift-price {
-  font-size: 0.82rem; color: var(--sage-dark);
+  font-size: 1rem; color: var(--sage-dark);
   font-weight: 500; margin-bottom: 0.8rem;
 }
 
@@ -636,6 +636,24 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
     display: flex; align-items: center; justify-content: center;
     color: var(--text-mid); touch-action: manipulation;
   }
+  .modal-drag-handle {
+    width: 40px; height: 4px;
+    background: var(--cream-dark);
+    border-radius: 2px;
+    margin: -0.5rem auto 1.2rem;
+  }
+  .modal-close-footer {
+    display: block; width: 100%; margin-top: 1.4rem;
+    padding: 1rem;
+    background: var(--cream-mid); border: none;
+    font-family: var(--font-display);
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-mid); cursor: pointer; touch-action: manipulation;
+  }
+}
+@media (min-width: 641px) {
+  .modal-drag-handle { display: none; }
+  .modal-close-footer { display: none; }
 }
 .modal-title {
   font-family: var(--font-display);
@@ -1158,7 +1176,8 @@ footer {
 
 <!-- MODAL REGALO -->
 <div class="modal-overlay" id="modal-regalo">
-  <div class="modal-box">
+  <div class="modal-box" id="modal-box-regalo">
+    <div class="modal-drag-handle"></div>
     <button class="modal-close" onclick="closeModal()">&times;</button>
     <div class="modal-close-bar">
       <span class="modal-close-bar-label">Dettagli regalo</span>
@@ -1183,6 +1202,7 @@ footer {
       <input type="number" id="modal-amount" placeholder="Il mio contributo (€)" min="1">
       <button class="modal-confirm-btn" onclick="confirmContribution()">Confermo</button>
     </div>
+    <button class="modal-close-footer" onclick="closeModal()">Chiudi</button>
   </div>
 </div>
 
@@ -1365,7 +1385,6 @@ const gifts = [
   { id: 'folletto', name: 'Folletto Vorwerk', price: 1200, desc: 'L\'aspirapolvere dei nostri sogni', img: 'https://media.vorwerk.com/is/image/vorwerk/int_folletto_VK7-EB7-PC7-SP7-HD7-PB7-MP7-MR7_product-lifestyle_002-1:4x3?wid=600&hei=450&tmst=1771346834005' },
   { id: 'Bitcoin', name: 'Acquisto Bitcoin', price: 5000, desc: 'Un investimento per il futuro', img: 'https://cdn.pixabay.com/photo/2018/01/18/07/31/bitcoin-3089728_1280.jpg' },
   { id: 'delonghi', name: 'Macchina del caffè De\'Longhi', price: 500, desc: 'Per iniziare le nostre mattine con il piede giusto', img: 'https://dam.delonghi.com/902x902/assets/362312' },
-  { id: 'valige', name: 'Set di Valigie Piquadro', price: 1000, desc: 'Nexis Set — per i nostri viaggi insieme', img: 'https://www.bagaglio.it/out/pictures/generated/product/1/768_768_85/d4/7f/ee/62939395abad591eadf96faabcc16b09_d47feee3b0be6d8d9459e660d789dfa3.jpg', contain: true },
 ];
 
 let currentGiftId = null;
@@ -1596,6 +1615,18 @@ window.addEventListener('load', () => {
 document.getElementById('modal-regalo').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// Swipe-down to close on mobile
+(function() {
+  const box = document.getElementById('modal-box-regalo');
+  let startY = 0;
+  box.addEventListener('touchstart', function(e) {
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+  box.addEventListener('touchend', function(e) {
+    if (e.changedTouches[0].clientY - startY > 80) closeModal();
+  }, { passive: true });
+})();
 document.getElementById('modal-grazie').addEventListener('click', function(e) {
   if (e.target === this) closeGrazie();
 });
