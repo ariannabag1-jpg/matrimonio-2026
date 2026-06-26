@@ -490,10 +490,48 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   background: var(--cream);
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  position: relative;
 }
 .gift-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.gift-card.completed {
+  cursor: default;
+}
+.gift-card.completed:hover {
+  transform: none;
+  box-shadow: none;
+}
+.gift-completed-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(89, 124, 66, 0.88);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  z-index: 2;
+  padding: 1.5rem;
+  text-align: center;
+}
+.gift-completed-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.gift-completed-title {
+  font-family: var(--font-script);
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1.2;
+}
+.gift-completed-sub {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.03em;
 }
 .gift-img-wrap {
   width: 100%; height: 180px;
@@ -1398,19 +1436,25 @@ function renderGiftCard(gift, contributed) {
   } else {
     imgHtml = `<div class="gift-img-wrap gift-no-img"><span class="gift-name-placeholder">${gift.name}</span></div>`;
   }
+  const overlayHtml = completed ? `
+    <div class="gift-completed-overlay">
+      <div class="gift-completed-icon">🌿</div>
+      <div class="gift-completed-title">Obiettivo raggiunto!</div>
+      <div class="gift-completed-sub">Grazie a tutti voi</div>
+    </div>` : '';
+
   const card = document.createElement('div');
-  card.className = 'gift-card';
+  card.className = completed ? 'gift-card completed' : 'gift-card';
   card.dataset.giftId = gift.id;
   card.innerHTML = `
+    ${overlayHtml}
     ${imgHtml}
     <div class="gift-body">
       <div class="gift-name">${gift.name}</div>
       <div class="gift-price">€ ${gift.price.toLocaleString('it-IT')}</div>
       <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
       <div class="progress-label"><span>${pct}% raggiunto</span><span>€ ${contributed.toLocaleString('it-IT')} / ${gift.price.toLocaleString('it-IT')}</span></div>
-      <button class="gift-btn ${completed ? 'completed' : ''}" onclick="openModal('${gift.id}')" ${completed ? 'disabled' : ''}>
-        ${completed ? 'Completamente coperto' : 'Voglio partecipare →'}
-      </button>
+      ${!completed ? `<button class="gift-btn" onclick="openModal('${gift.id}')">Voglio partecipare →</button>` : ''}
     </div>`;
   return card;
 }
