@@ -1042,8 +1042,8 @@ footer {
       <li><a href="#luoghi" onclick="closeNav()">I Luoghi</a></li>
       <li><a href="#arrivare" onclick="closeNav()">Come Arrivare</a></li>
       <li><a href="#lista-nozze" onclick="closeNav()">Lista Nozze</a></li>
-      <li><a href="#day-after" onclick="closeNav()">Il Giorno Dopo</a></li>
       <li><a href="#guestbook" onclick="closeNav()">Guestbook</a></li>
+      <li><a href="#day-after" onclick="closeNav()">Il Giorno Dopo</a></li>
       <li><a href="#spotify" onclick="closeNav()">Playlist</a></li>
     </ul>
     <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-label="Apri menu">
@@ -1251,9 +1251,37 @@ footer {
   </div>
 </div>
 
+<!-- GUESTBOOK -->
+<section id="guestbook">
+  <img class="section-botanical right" src="./foglia.png" alt="">
+  <div class="section-inner">
+    <div class="section-label">Lasciate un segno</div>
+    <h2 class="section-title">Guestbook</h2>
+    <div class="section-divider"></div>
+    <div class="guestbook-form">
+      <div class="form-row">
+        <label>Il tuo messaggio</label>
+        <textarea id="gb-message" placeholder="Scrivi un pensiero, un augurio, un ricordo..." style="min-height:100px;"></textarea>
+      </div>
+      <div class="form-row">
+        <label id="gb-name-label">Il tuo nome</label>
+        <input type="text" id="gb-name" placeholder="Come ti chiami?">
+        <label class="anon-toggle">
+          <input type="checkbox" id="gb-anon" onchange="toggleAnon()">
+          Firma come anonimo
+        </label>
+      </div>
+      <button class="btn-primary" onclick="submitGuestbook()" style="margin-top:1rem;">Lascia il tuo messaggio</button>
+    </div>
+    <div class="messages-wall" id="messages-wall">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
 <!-- DAY AFTER -->
 <section id="day-after">
-  <img class="section-botanical right" src="./foglia.png" alt="">
+  <img class="section-botanical left" src="./foglia.png" alt="">
   <div class="section-inner">
     <div class="section-label">Per chi si ferma</div>
     <h2 class="section-title">Il Giorno Dopo</h2>
@@ -1303,34 +1331,6 @@ footer {
         <div class="da-dist">~15 min in auto</div>
         <p class="da-desc">Borgo dei Borghi 2023. Centro storico graziosissimo, ottima cucina tipica della Tuscia. Perfetto per un pranzo rilassato.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- GUESTBOOK -->
-<section id="guestbook">
-  <img class="section-botanical left" src="./foglia.png" alt="">
-  <div class="section-inner">
-    <div class="section-label">Lasciate un segno</div>
-    <h2 class="section-title">Guestbook</h2>
-    <div class="section-divider"></div>
-    <div class="guestbook-form">
-      <div class="form-row">
-        <label>Il tuo messaggio</label>
-        <textarea id="gb-message" placeholder="Scrivi un pensiero, un augurio, un ricordo..." style="min-height:100px;"></textarea>
-      </div>
-      <div class="form-row">
-        <label id="gb-name-label">Il tuo nome</label>
-        <input type="text" id="gb-name" placeholder="Come ti chiami?">
-        <label class="anon-toggle">
-          <input type="checkbox" id="gb-anon" onchange="toggleAnon()">
-          Firma come anonimo
-        </label>
-      </div>
-      <button class="btn-primary" onclick="submitGuestbook()" style="margin-top:1rem;">Lascia il tuo messaggio</button>
-    </div>
-    <div class="messages-wall" id="messages-wall">
-      <!-- Populated by JS -->
     </div>
   </div>
 </section>
