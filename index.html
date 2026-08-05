@@ -582,7 +582,7 @@ section { padding: 6rem 2rem; position: relative; overflow: hidden; }
   transition: width 0.6s ease;
 }
 .progress-label {
-  font-size: 0.72rem; color: var(--text-light);
+  font-size: 0.85rem; color: var(--text-light);
   display: flex; justify-content: space-between;
 }
 
@@ -1458,7 +1458,6 @@ function renderGiftCard(gift, contributed) {
     ${imgHtml}
     <div class="gift-body">
       <div class="gift-name">${gift.name}</div>
-      <div class="gift-price">€ ${gift.price.toLocaleString('it-IT')}</div>
       <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
       <div class="progress-label"><span>${pct}% raggiunto</span></div>
       ${!completed ? `<button class="gift-btn" onclick="openModal('${gift.id}')">Voglio partecipare →</button>` : ''}
