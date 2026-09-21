@@ -1044,6 +1044,49 @@ footer {
   .tl-left { grid-area: unset; text-align: right; padding-right: 2rem; padding-left: 0; }
   .tl-right { grid-area: unset; padding-left: 2rem; padding-top: 0; }
 }
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── NAV ON SCROLL ── */
+nav { transition: box-shadow 0.3s ease; }
+.nav-inner { transition: height 0.3s ease; }
+nav.nav-scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+nav.nav-scrolled .nav-inner { height: 46px; }
+
+/* ── CARD HOVER LIFT ── */
+.luogo-card, .info-card, .da-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.luogo-card:hover, .info-card:hover, .da-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.08);
+}
+
+/* ── BOTANICAL LEAF SWAY ── */
+.section-botanical, .hero-side-botanical {
+  animation: leafSway 7s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.section-botanical.right, .hero-side-botanical.right { animation-delay: -3.5s; }
+@keyframes leafSway {
+  0%, 100% { rotate: -1.5deg; }
+  50% { rotate: 1.5deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .section-botanical, .hero-side-botanical { animation: none; }
+  .luogo-card, .info-card, .da-card, .gift-card { transition: none; }
+}
 </style>
 
 <!-- NAV -->
@@ -1465,7 +1508,7 @@ function renderGiftCard(gift, contributed) {
     </div>` : '';
 
   const card = document.createElement('div');
-  card.className = completed ? 'gift-card completed' : 'gift-card';
+  card.className = completed ? 'gift-card completed reveal' : 'gift-card reveal';
   card.dataset.giftId = gift.id;
   card.innerHTML = `
     ${overlayHtml}
@@ -1507,6 +1550,11 @@ async function loadGifts() {
       grid.appendChild(renderGiftCard(gift, dataMap[gift.id] || 0));
     }
   } catch(e) {}
+
+  grid.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = Math.min(i * 0.06, 0.36) + 's';
+    if (window.revealObserver) window.revealObserver.observe(el);
+  });
 }
 
 function toggleNav() {
@@ -1671,8 +1719,49 @@ document.getElementById('spotify-input').addEventListener('keypress', e => {
   if (e.key === 'Enter') addSong();
 });
 
+// ── SCROLL REVEAL ──
+function initScrollReveal() {
+  const groups = ['.luoghi-grid', '.arrivare-grid', '.dayafter-grid', '.timeline'];
+  groups.forEach(sel => {
+    document.querySelectorAll(`${sel} > *`).forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = Math.min(i * 0.08, 0.4) + 's';
+    });
+  });
+  document.querySelectorAll('.section-label, .section-title, .timeline-note').forEach(el => {
+    el.classList.add('reveal');
+  });
+
+  window.revealObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => window.revealObserver.observe(el));
+}
+
+// ── NAV ON SCROLL ──
+function initNavScroll() {
+  const nav = document.querySelector('nav');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 30);
+      ticking = false;
+    });
+  }, { passive: true });
+}
+
 // ── INIT ──
 window.addEventListener('load', () => {
+  initScrollReveal();
+  initNavScroll();
   loadGifts();
   loadMessages();
   loadSongs();
