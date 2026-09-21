@@ -208,6 +208,7 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   padding: 1.5rem 1.8rem 1.8rem;
   position: relative;
 }
@@ -255,6 +256,9 @@ nav {
   opacity: 0;
   animation: fadeUp 1s 0.5s forwards;
 }
+@media (max-width: 400px) {
+  .hero-names { font-size: 6.8vw; letter-spacing: 0.16em; }
+}
 
 .hero-divider {
   width: 50px; height: 1px;
@@ -270,20 +274,30 @@ nav {
   font-style: italic;
   color: var(--text-mid);
   letter-spacing: 0.03em;
+  width: 100%;
+  padding: 0 0.5rem;
   opacity: 0;
   animation: fadeUp 1s 1s forwards;
 }
 
 .countdown-wrap {
-  display: flex; gap: 2.5rem;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  width: 100%;
+  gap: 1rem 1.4rem;
   margin-top: 3rem;
   opacity: 0;
   animation: fadeUp 1s 1.2s forwards;
 }
+@media (min-width: 481px) {
+  .countdown-wrap { gap: 1.5rem 2rem; }
+}
+@media (min-width: 641px) {
+  .countdown-wrap { gap: 2.5rem; }
+}
 .cd-block { text-align: center; }
 .cd-num {
   font-family: var(--font-body);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(1.8rem, 8vw, 3.5rem);
   font-weight: 300;
   color: var(--sage-dark);
   display: block;
@@ -1480,12 +1494,17 @@ async function loadGifts() {
     const snap = await db.collection('gifts').get();
     const dataMap = {};
     snap.forEach(doc => { dataMap[doc.id] = doc.data().amount || 0; });
-    for (const gift of gifts) {
-      const contributed = dataMap[gift.id] || 0;
-      if (contributed > 0) {
-        const existing = grid.querySelector(`[data-gift-id="${gift.id}"]`);
-        if (existing) existing.replaceWith(renderGiftCard(gift, contributed));
-      }
+
+    // Regali ancora da completare in cima, quelli già raggiunti in fondo
+    const sorted = [...gifts].sort((a, b) => {
+      const doneA = (dataMap[a.id] || 0) >= a.price ? 1 : 0;
+      const doneB = (dataMap[b.id] || 0) >= b.price ? 1 : 0;
+      return doneA - doneB;
+    });
+
+    grid.innerHTML = '';
+    for (const gift of sorted) {
+      grid.appendChild(renderGiftCard(gift, dataMap[gift.id] || 0));
     }
   } catch(e) {}
 }
